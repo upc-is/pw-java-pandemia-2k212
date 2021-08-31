@@ -6,6 +6,16 @@
 	
 	<persistence-unit name="pandemiaPU" transaction-type="JTA">
 		<jta-data-source>java:/PandemiaDS</jta-data-source>
+		<class>pe.edu.upc.pandemia.model.entity.Authority</class>
+		<class>pe.edu.upc.pandemia.model.entity.Country</class>
+		<class>pe.edu.upc.pandemia.model.entity.Department</class>
+		<class>pe.edu.upc.pandemia.model.entity.Employee</class>
+		<class>pe.edu.upc.pandemia.model.entity.Job</class>
+		<class>pe.edu.upc.pandemia.model.entity.JobHistory</class>
+		<class>pe.edu.upc.pandemia.model.entity.Language</class>
+		<class>pe.edu.upc.pandemia.model.entity.Location</class>
+		<class>pe.edu.upc.pandemia.model.entity.Region</class>
+		<class>pe.edu.upc.pandemia.model.entity.User</class>
 		
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
