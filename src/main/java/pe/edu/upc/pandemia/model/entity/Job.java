@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Jobs")
-public class Job {
+public class Job {	// Perfil/Rol/Puesto laboral
 	@Id
 	@Column(name = "job_id", length = 10)
 	private String id;
