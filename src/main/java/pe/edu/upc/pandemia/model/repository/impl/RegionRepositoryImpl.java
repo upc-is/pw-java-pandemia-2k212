@@ -3,12 +3,16 @@ package pe.edu.upc.pandemia.model.repository.impl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import pe.edu.upc.pandemia.model.entity.Region;
 import pe.edu.upc.pandemia.model.repository.RegionRepository;
 
+@Named
+@ApplicationScoped
 public class RegionRepositoryImpl implements RegionRepository {
 	
 	@PersistenceContext(unitName = "pandemiaPU")
