@@ -14,17 +14,21 @@
         		rowKey="#{region.id}" paginator="true" paginatorPosition="bottom"
         		rows="3" sortMode="single" allowUnsorting="true">
         	<p:column selectionMode="Multiple" style="width:16px;text-align:center" />
-            <p:column headerText="Id" sortBy="#{region.name}">
+        	
+            <p:column headerText="Id" sortBy="#{region.id}">
                 <h:outputText value="#{region.id}" />
             </p:column>
-
             <p:column headerText="Name" sortBy="#{region.name}">
                 <h:outputText value="#{region.name}" />
             </p:column>
             
             <p:column>
-            	<p:commandButton icon="pi pi-pencil"
-            			styleClass="edit-button rounded-button ui-button-success" />
+            	<p:commandButton icon="pi pi-pencil" oncomplete="PF('regionDialog').show()"
+            			styleClass="edit-button rounded-button ui-button-success" 
+            			update="@form:region-content" process="@this">
+            		<f:setPropertyActionListener value="#{region}" target="#{regionView.regionSelected}"/>
+            		<p:resetInput target="@form:region-content"/>
+            	</p:commandButton>
             	<p:commandButton icon="pi pi-trash" style="margin-left: 10px;"
             			styleClass="rounded-button ui-button-danger" />
             </p:column>
@@ -35,14 +39,11 @@
             
             <f:facet name="footer">
             	<p:commandButton process="regionDataTable" value="New" icon="pi pi-check" 
-            			actionListener="#{regionView.createNew}"
+            			actionListener="#{regionView.createNew}" update="@form:region-content"
             			oncomplete="PF('regionDialog').show()" styleClass="ui-button-raised ui-button-success" />
             	
-            			
-            	<p:commandButton process="regionDataTable" value="View" icon="pi pi-check" 
-            			oncomplete="PF('regionDialog').show()" />
-            			
             	<p:commandButton id="region-button-edit" process="regionDataTable" value="Edit" icon="pi pi-check" 
+            			actionListener="#{regionView.editRegionSelected}" update="@form:region-content"
             			oncomplete="PF('regionDialog').show()" styleClass="ui-button-raised ui-button-help"
             			disabled="#{!regionView.hasRegionSelected()}" />
             	

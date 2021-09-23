@@ -52,12 +52,21 @@ public class RegionView implements Serializable {
 	public void createNew() {
 		regionSelected = new Region();		
 	}
+	public void editRegionSelected() {
+		regionSelected = regionsSelected.get(0);
+	}
 	public void saveRegion() {
 		try {
 			System.out.println(regionSelected.getId());
 			System.out.println(regionSelected.getName());
-			regionService.create(regionSelected);
-			regions.add(regionSelected);
+			if (regionSelected.getId() == null) {
+				regionService.create(regionSelected);
+				regions.add(regionSelected);
+			} 
+			else {
+				regionService.update(regionSelected);
+			}			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
