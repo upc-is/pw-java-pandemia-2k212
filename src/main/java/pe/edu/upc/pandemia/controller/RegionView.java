@@ -9,6 +9,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
+
 import pe.edu.upc.pandemia.business.crud.RegionService;
 import pe.edu.upc.pandemia.model.entity.Region;
 
@@ -40,6 +42,28 @@ public class RegionView implements Serializable {
 			return false;
 		}
 		return true;
+	}
+	public boolean hasRegionSelected() {
+		if (regionsSelected.size() == 1) {
+			return true;
+		}
+		return false;
+	}
+	public void createNew() {
+		regionSelected = new Region();		
+	}
+	public void saveRegion() {
+		try {
+			System.out.println(regionSelected.getId());
+			System.out.println(regionSelected.getName());
+			regionService.create(regionSelected);
+			regions.add(regionSelected);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		PrimeFaces.current().executeScript("PF('regionDialog').hide()");
+        PrimeFaces.current().ajax().update("regionDataTable");
 	}
 	
 	public List<Region> getRegions() {
