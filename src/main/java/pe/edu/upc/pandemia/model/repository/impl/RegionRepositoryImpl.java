@@ -32,7 +32,15 @@ public class RegionRepositoryImpl implements RegionRepository {
 	public List<Region> findAll() throws Exception {
 		// create a Sentence
 		String jpql = "SELECT region FROM Region region";		
-		return findAll(Region.class, jpql);
+		return findByQuery(Region.class, jpql);
 	}
 
+	@Override
+	public List<Region> findByName(String name) throws Exception {
+		String jpql = "SELECT r FROM Region r WHERE r.name LIKE '%" + name + "%'" ;	
+		System.out.println(jpql);
+		return findByQuery(Region.class, jpql);
+	}
+
+	
 }

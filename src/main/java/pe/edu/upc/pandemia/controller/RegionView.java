@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,7 +24,8 @@ public class RegionView implements Serializable {
 	
 	private List<Region> regions;
 	private Region regionSelected;
-	private List<Region> regionsSelected;	
+	private List<Region> regionsSelected;
+	private Region regionSearch;
 	
 	@Inject
 	private RegionService regionService;
@@ -30,11 +33,8 @@ public class RegionView implements Serializable {
 	@PostConstruct
 	public void init() {
 		regionsSelected = new ArrayList<>();
-		try {
-			regions = regionService.getAll();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		regionSearch = new Region();
+		getAllRegion();
 	}
 	
 	public boolean hasRegionsSelected() {
@@ -57,8 +57,6 @@ public class RegionView implements Serializable {
 	}
 	public void saveRegion() {
 		try {
-			System.out.println(regionSelected.getId());
-			System.out.println(regionSelected.getName());
 			if (regionSelected.getId() == null) {
 				regionService.create(regionSelected);
 				regions.add(regionSelected);
@@ -73,6 +71,32 @@ public class RegionView implements Serializable {
 		}
 		PrimeFaces.current().executeScript("PF('regionDialog').hide()");
         PrimeFaces.current().ajax().update("regionDataTable");
+	}
+	public void deleteRegion() {
+		try {
+			this.regions.remove(regionSelected);
+			regionService.deleteById(this.regionSelected.getId());
+			this.regionSelected = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		FacesContext.getCurrentInstance()
+			.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Remove", "Item Removed"));
+		//PrimeFaces.current().ajax().update("form:messages", "regionDataTable");
+	}
+	public void searchRegion() {
+		try {
+			regions = regionService.findByName(regionSearch.getName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	public void getAllRegion() {
+		try {
+			regions = regionService.getAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 	}
 	
 	public List<Region> getRegions() {
@@ -97,6 +121,14 @@ public class RegionView implements Serializable {
 
 	public void setRegionsSelected(List<Region> regionsSelected) {
 		this.regionsSelected = regionsSelected;
+	}
+
+	public Region getRegionSearch() {
+		return regionSearch;
+	}
+
+	public void setRegionSearch(Region regionSearch) {
+		this.regionSearch = regionSearch;
 	}
 	
 }

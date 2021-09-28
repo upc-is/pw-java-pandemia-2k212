@@ -31,7 +31,7 @@ public class CountryRepositoryImpl implements CountryRepository {
 	@Override
 	public List<Country> findAll() throws Exception {
 		String jpql = "SELECT country FROM Country country";	
-		return findAll(Country.class, jpql);
+		return findByQuery(Country.class, jpql);
 	}
 
 }

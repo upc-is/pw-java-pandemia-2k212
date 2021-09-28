@@ -40,7 +40,7 @@ public interface JpaRepository<T, ID> {
 	
 	List<T> findAll() throws Exception;
 	
-	default List<T> findAll(Class<T> entityClass, String jpql) throws Exception {
+	default List<T> findByQuery(Class<T> entityClass, String jpql) throws Exception {
 		List<T> entities = new ArrayList<T>();
 		// Execute Query
 		TypedQuery<T> typedQuery = getEntityManager().createQuery(jpql, entityClass);

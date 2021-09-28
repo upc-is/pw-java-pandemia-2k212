@@ -1,5 +1,7 @@
 package pe.edu.upc.pandemia.business.crud.impl;
 
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,5 +22,11 @@ public class RegionServiceImpl implements RegionService {
 	public JpaRepository<Region, Integer> getJpaRepository() {
 		return regionRepository;
 	}
+
+	@Override
+	public List<Region> findByName(String name) throws Exception {
+		return regionRepository.findByName(name);
+	}
+	
 
 }

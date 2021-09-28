@@ -33,7 +33,7 @@ public class LocationRepositoryImpl implements LocationRepository {
 	@Override
 	public List<Location> findAll() throws Exception {
 		String jpql = "SELECT lo FROM Location lo";	
-		return findAll(Location.class, jpql);
+		return findByQuery(Location.class, jpql);
 	}
 
 	@Override
